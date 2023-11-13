@@ -1,0 +1,21 @@
+.post-container {
+  display: flex;
+  flex-direction: column;
+  margin: 5px;
+  background-color: rgb(53, 50, 70);
+  color: white;
+  padding: 20px;
+}
+.post-container-name {
+  display: flex;
+}
+.post-container-comment-like {
+  display: flex;
+  justify-content: space-between;
+  padding: 10px, 10px;
+}
+.post-container-msg {
+  display: flex;
+  justify-content: start;
+  padding: 20px;
+}

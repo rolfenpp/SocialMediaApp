@@ -1,0 +1,7 @@
+.postpage-container {
+}
+
+.feed-container {
+  display: flex;
+  flex-direction: column-reverse;
+}
