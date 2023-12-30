@@ -1,5 +1,6 @@
 namespace SocialMedia.Entities;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 
 public class Post 
     {
@@ -12,4 +13,5 @@ public class Post
         // Foreign key prop
         public int UserId { get; set; }
         public User User { get; set; }
+        public ICollection<Comment> Comments {get; set;}
     }

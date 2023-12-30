@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 
-const MakePost = ({ userCredentials }) => {
+const MakePost = ({ userCredentials, setPosts, posts }) => {
   const [message, setMessage] = useState("");
 
   const handleMessage = (e) => {
@@ -11,31 +11,37 @@ const MakePost = ({ userCredentials }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const userPost = {
-      firstName: userCredentials.firstName,
-      lastName: userCredentials.lastName,
-      message: message,
-      liked: 0,
-      userId: localStorage.getItem("userId"),
-    };
+    if (message.length >= 10) {
+      const userPost = {
+        message: message,
+        liked: 0,
+        userId: localStorage.getItem("userId"), // Who made the post
+        /* firstName: userCredentials.firstName,
+      lastName: userCredentials.lastName, */
+      };
 
-    try {
-      console.log(userPost);
-      const response = await fetch("https://localhost:7000/SocialMedia", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(userPost),
-      });
+      try {
+        console.log(userPost);
+        const response = await fetch("https://localhost:7000/SocialMedia", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(userPost),
+        });
 
-      if (response.ok) {
-        console.log("Post created successfully");
-      } else {
-        console.error("Failed to create the post");
+        if (response.ok) {
+          console.log("Post created successfully");
+          setPosts(!posts);
+          setMessage("");
+        } else {
+          console.error("Failed to create the post");
+        }
+      } catch (error) {
+        console.error("Error during POST request:", error);
       }
-    } catch (error) {
-      console.error("Error during POST request:", error);
+    } else {
+      alert("Message must contain atleast 10 characters!");
     }
   };
 

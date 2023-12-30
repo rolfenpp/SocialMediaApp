@@ -8,6 +8,7 @@ import "../component/Feed.css";
 const Feed = ({ userCredentials, setLoggedIn }) => {
   const [feedData, setFeedData] = useState([]);
   const [username, setUsername] = useState(null);
+  const [posts, setPosts] = useState(false);
 
   const fetchUser = () => {
     const userId = localStorage.getItem("userId");
@@ -49,13 +50,17 @@ const Feed = ({ userCredentials, setLoggedIn }) => {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [posts]);
 
   return (
     <div className="postpage-container">
       <button onClick={handleLogout}>Logout</button>
       <div className="makepost-input">
-        <MakePost userCredentials={userCredentials} />
+        <MakePost
+          userCredentials={userCredentials}
+          setPosts={setPosts}
+          posts={posts}
+        />
       </div>
       <div className="feed-container">
         {feedData.map((x) => (
