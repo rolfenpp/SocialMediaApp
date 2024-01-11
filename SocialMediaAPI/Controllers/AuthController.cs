@@ -18,15 +18,15 @@ public class AuthController: ControllerBase
         this.context = context;
         this.config = config;
     }
+
+    // Get a specific user "https://localhost:7000/auth/1"
     [HttpGet("{id}")]
     /* [Authorize] */
     public ActionResult<UserDto> GetUser(int id)
     {
         var user = context.Users.FirstOrDefault(x => x.Id == id);
-        /* var user = context.Users.FirstOrDefault(x => x.Id == id); */
 
         if (user is null)
-        /* if (user is null) */
             return NotFound(); // 404 Not Found
 
         var userDto = new UserDto
@@ -35,12 +35,11 @@ public class AuthController: ControllerBase
             UserName = user.UserName,
             FirstName = user.FirstName,
             LastName = user.LastName
-        
-           /*  Beskrivning = product.Beskrivning, */
         };
 
         return userDto; // 200 OK
     }
+    // Create a user
     [HttpPost("register")]
     public ActionResult<UserDto> CreateUser([FromBody] CreateUserRequest createUserRequest) 
     {
@@ -56,7 +55,8 @@ public class AuthController: ControllerBase
         UserName = createUserRequest.UserName,
         Password = createUserRequest.Password, // You should hash and salt the password for security
         FirstName = createUserRequest.FirstName,
-        LastName = createUserRequest.LastName
+        LastName = createUserRequest.LastName,
+        ImageUrl = createUserRequest.ImageUrl
     };
 
     context.Users.Add(user);
@@ -73,6 +73,7 @@ public class AuthController: ControllerBase
     return CreatedAtAction(nameof(GetUser), new { id = user.Id }, userDto); // 201 Created
     }
 
+    // Authenticate a user -> "https://localhost:7000/auth/register" (firstname, lastname, userName, password)
     [HttpPost]
     public ActionResult<TokenDto> Authenticate(AuthenticateRequest authenticateRequest) 
     {
@@ -94,7 +95,7 @@ public class AuthController: ControllerBase
         return tokenDto;
     }
 
-
+    // Generering av token
     private TokenDto GenerateToken(User user) // Token kan innehålla info om användare är admin eller inte
     {
         // Använder signeringsnyckel för att generera en signatur för token
@@ -112,7 +113,7 @@ public class AuthController: ControllerBase
 
         var token = new TokenDto
         {
-            //Generera token
+            //Generera token t.ex. "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9" osv..
             Token = jwtTokenHandler.WriteToken(jwtSecurityToken),
             UserId = user.Id,
         };
@@ -136,6 +137,7 @@ public class CreateUserRequest
     public string Password { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
+    public string? ImageUrl { get; set; }
 }
 
 public class UserDto

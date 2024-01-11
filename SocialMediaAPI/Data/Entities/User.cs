@@ -14,6 +14,8 @@ public class User
     public required string Password {get; set;}
     public string FirstName {get; set;}
     public string LastName {get; set;}
+
+    public string ImageUrl { get; set; }
    /*  [MaxLength(50)]
     public string? Name {get; set;}
     [MaxLength(50)]

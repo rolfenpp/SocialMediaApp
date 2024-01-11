@@ -1,4 +1,5 @@
 using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using SocialMedia.data;
@@ -16,11 +17,14 @@ public class SocialMediaController : ControllerBase
         this.context = context;
     }
 
+// Get all posts "https://localhost:7000/SocialMedia"
 [HttpGet]
+/* [Authorize] */
 public IEnumerable<PostDto> GetPosts()
 {
     var localPosts = context.Posts
         .Include(post => post.User)
+        .OrderByDescending(post => post.CreatedAt)
         .ToList();
 
 
@@ -30,13 +34,16 @@ public IEnumerable<PostDto> GetPosts()
         Message = x.Message,
         Liked = x.Liked,
         FirstName = x.User.FirstName, // Access User property here
-        LastName = x.User.LastName // Access User property here
+        LastName = x.User.LastName,
+        CreatedAt = x.CreatedAt                 // Access User property here
+        
     });
 
     return postDto;
 }
 
-    [HttpGet("{id}")]
+// Get posts by Id "https://localhost:7000/SocialMedia/33"
+[HttpGet("{id}")]
     /* [Authorize] */
     public ActionResult<PostDto> GetPost(int id)
     {
@@ -55,12 +62,79 @@ public IEnumerable<PostDto> GetPosts()
             FirstName = post.FirstName,
             LastName = post.LastName
         
+        
            /*  Beskrivning = product.Beskrivning, */
         };
 
         return postDto; // 200 OK
     }
-    [HttpPut("{id}/like")]
+    
+// Create post "https://localhost:7000/SocialMedia"
+[HttpPost]
+public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
+{
+    var user = context.Users.FirstOrDefault(u => u.Id == createPostRequest.UserId);
+
+    if (user == null)
+    {
+        // Handle the case where the user is not found, return a suitable response
+        return NotFound("User not found");
+    }
+
+    var post = new Post
+    {
+        Message = createPostRequest.Message,
+        Liked = createPostRequest.Liked,
+        UserId = user.Id,
+        FirstName = user.FirstName,
+        LastName = user.LastName,
+        CreatedAt = DateTime.Now
+    };
+
+    // Save post in database
+    context.Posts.Add(post);
+    context.SaveChanges();
+
+    // Create a comment if comment text is provided
+    // Return the PostDto to the caller
+    var postDto = new PostDto
+    {
+        Id = post.Id,
+        Message = post.Message,
+        Liked = post.Liked,
+        FirstName = user.FirstName,
+        LastName = user.LastName
+    };
+
+    return Created("", postDto);
+}
+
+ [HttpPost("{id}")]
+    /* [Authorize] */
+    public ActionResult<PostDto> LikeCommentPost(int id)
+    {
+        var post = context.Posts.FirstOrDefault(x => x.Id == id);
+        /* var user = context.Users.FirstOrDefault(x => x.Id == id); */
+
+        if (post is null)
+        /* if (user is null) */
+            return NotFound(); // 404 Not Found
+
+        var postDto = new PostDto
+        {
+            Id = post.Id,
+            Message = post.Message,
+            Liked = post.Liked,
+            FirstName = post.FirstName,
+            LastName = post.LastName
+        
+           /*  Beskrivning = product.Beskrivning, */
+        };
+
+        return postDto; // 200 OK
+    }
+
+[HttpPut("{id}/like")]
     public ActionResult<PostDto> UpdateLikedCount(int id, [FromBody] UpdateLikedCountRequest updateRequest)
     {
         var post = context.Posts.FirstOrDefault(x => x.Id == id);
@@ -87,104 +161,7 @@ public IEnumerable<PostDto> GetPosts()
 
         return Ok(postDto);
     }
-    [HttpPost("{id}")]
-    /* [Authorize] */
-    public ActionResult<PostDto> LikeCommentPost(int id)
-    {
-        var post = context.Posts.FirstOrDefault(x => x.Id == id);
-        /* var user = context.Users.FirstOrDefault(x => x.Id == id); */
-
-        if (post is null)
-        /* if (user is null) */
-            return NotFound(); // 404 Not Found
-
-        var postDto = new PostDto
-        {
-            Id = post.Id,
-            Message = post.Message,
-            Liked = post.Liked,
-            FirstName = post.FirstName,
-            LastName = post.LastName
-        
-           /*  Beskrivning = product.Beskrivning, */
-        };
-
-        return postDto; // 200 OK
-    }
-
-
-[HttpPost]
-public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
-{
-    var user = context.Users.FirstOrDefault(u => u.Id == createPostRequest.UserId);
-
-    if (user == null)
-    {
-        // Handle the case where the user is not found, return a suitable response
-        return NotFound("User not found");
-    }
-
-    var post = new Post
-    {
-        Message = createPostRequest.Message,
-        Liked = createPostRequest.Liked,
-        UserId = user.Id,
-        FirstName = user.FirstName,
-        LastName = user.LastName
-    };
-
-    // Save post in database
-    context.Posts.Add(post);
-    context.SaveChanges();
-
-    // Create a comment if comment text is provided
-    // Return the PostDto to the caller
-    var postDto = new PostDto
-    {
-        Id = post.Id,
-        Message = post.Message,
-        Liked = post.Liked,
-        FirstName = user.FirstName,
-        LastName = user.LastName
-    };
-
-    return Created("", postDto);
-}
-/* [HttpPost("comments")]
-public ActionResult<Comment> CreateComment(CreateCommentRequest createCommentRequest)
-{
-    var post = context.Posts.FirstOrDefault(p => p.Id == createCommentRequest.PostId);
-
-
-    var comment = new Comment
-    {
-        PostId = post.Id,
-        UserId = user.Id,
-        Text = createCommentRequest.CommentText
-    };
-
-    context.Comments.Add(comment);
-    context.SaveChanges();
-
-    return Created("", comment);
-} */
-}
-
-/*  if (!string.IsNullOrEmpty(createPostRequest.CommentText))
-    {
-        var comment = new Comment
-        {
-            PostId = post.Id,
-            UserId = user.Id,
-            Text = createPostRequest.CommentText,
-            CreatedAt = DateTime.Now
-        };
-
-        context.Comments.Add(comment);
-        context.SaveChanges();
-    }
- */
-
+}  
 
 public class PostDto
 {
@@ -193,6 +170,8 @@ public class PostDto
     public int Liked {get; set;}
     public string FirstName {get; set;}
     public string LastName {get; set;}
+    public DateTime CreatedAt { get; set; }
+    
 }
 public class UpdateLikedCountRequest
 {
@@ -209,6 +188,8 @@ public class CreatePostRequest
     public int Liked {get; set;}
     [Required]
     public int UserId { get; set; }
+
+    public DateTime CreatedAt { get; set; }
     /* public string CommentText { get; set; } */
 }
 
