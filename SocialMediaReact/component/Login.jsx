@@ -38,9 +38,6 @@ const Login = ({ setLoggedIn, setUserCredentials, toggleCreateAccount }) => {
         localStorage.setItem("userId", userId);
         try {
           if (userFetched) {
-            console.log("Username:", userFetched.userName);
-            console.log("Last Name:", userFetched.lastName);
-            console.log("First Name:", userFetched.firstName);
             localStorage.setItem("firstName", userFetched.firstName);
 
             setUserCredentials(userFetched);

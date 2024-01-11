@@ -27,7 +27,6 @@ function App() {
 
   return (
     <div className="app" style={{ backgroundImage: `url(${ForestAboveImg})` }}>
-      {/* <div className="background-blur"></div> */}
       {loggedIn ? (
         // Transfer user credentials to feed
         <Feed userCredentials={userCredentials} setLoggedIn={setLoggedIn} />

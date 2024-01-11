@@ -25,7 +25,10 @@ const Feed = ({ userCredentials, setLoggedIn }) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("https://localhost:7000/SocialMedia");
+      const response = await fetch("https://localhost:7000/SocialMedia", {
+        headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Set the Authorization header
+        // ... any other headers
+      });
       if (response.ok) {
         const jsonData = await response.json();
         console.log(jsonData);
@@ -54,7 +57,9 @@ const Feed = ({ userCredentials, setLoggedIn }) => {
 
   return (
     <div className="postpage-container">
-      <button onClick={handleLogout}>Logout</button>
+      <button className="logout-btn" onClick={handleLogout}>
+        Logout
+      </button>
       <div className="makepost-input">
         <MakePost
           userCredentials={userCredentials}

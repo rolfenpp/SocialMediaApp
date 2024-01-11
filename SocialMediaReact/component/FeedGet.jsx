@@ -84,11 +84,11 @@ const FeedGet = (props) => {
 
       <div className="post-container-comment-like">
         <form onSubmit={handleComment}>
-          <textarea
+          <input
             value={commentValue}
             onChange={(e) => setCommentValue(e.target.value)}
             placeholder="comment.."
-          ></textarea>
+          ></input>
           <button type="submit">Comment</button>
         </form>
 

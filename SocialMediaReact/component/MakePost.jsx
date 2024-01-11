@@ -1,5 +1,6 @@
 import React from "react";
 import { useState } from "react";
+import "../component/MakePost.css";
 
 const MakePost = ({ userCredentials, setPosts, posts }) => {
   const [message, setMessage] = useState("");
@@ -46,18 +47,15 @@ const MakePost = ({ userCredentials, setPosts, posts }) => {
   };
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Message"
-          value={message}
-          onChange={handleMessage}
-        />
-
-        <button>Post</button>
-      </form>
-    </div>
+    <form className="wallpost-form" onSubmit={handleSubmit}>
+      <input
+        type="text"
+        placeholder="Message"
+        value={message}
+        onChange={handleMessage}
+      />
+      <button className="post-btn">Post</button>
+    </form>
   );
 };
 
