@@ -103,6 +103,13 @@ public ActionResult CreateComment(CreateCommentRequest createCommentRequest)
 
     return Created("", comment);
 }
+[HttpGet("comment")]
+public ActionResult<IEnumerable<Comment>> GetComments()
+{
+    
+    var comments = context.Comments.ToList();
+    return Ok(comments);
+}
 
 
 

@@ -1,34 +1,36 @@
 import { useState } from "react"
 
 
-const MakeComment = () => {
+const MakeComment = ({postId}) => {
     const [comment, setComment] = useState("")
 
-    const handleChange = () => {
-        setComment(comment)
+    const handleChange = (e) => {
+        setComment(e.target.value)
     }
 
     const handleSubmit = async (e) => {
+        console.log(postId)
         e.preventDefault();
     
          {
-          const userPost = {
+          const userComment = {
             Text: comment,
             UserId: localStorage.getItem("userId"),
-            PostId: 1
+            PostId: postId
           };
     
           try {
-            console.log(userPost);
-            const response = await fetch("https://localhost:7000/SocialMedia/comment", {
+            console.log(userComment);
+            const response = await fetch("https://localhost:7000/socialmedia/comment", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",
               },
-              body: JSON.stringify(userPost),
+              body: JSON.stringify(userComment),
             });
     
             if (response.ok) {
+              console.log(userComment)
               console.log("Post created successfully");
               /* setPosts(!posts); */
               setComment("");
@@ -49,3 +51,5 @@ const MakeComment = () => {
         <button>Comment</button>
     </form>)
 }
+
+export default MakeComment

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
+import MakeComment from "./MakeComment";
 
-const GetPost = ({ feedData }) => {
+const GetPost = ({ feedData, comments }) => {
 
 
   return (
@@ -12,8 +13,23 @@ const GetPost = ({ feedData }) => {
           </p>
           <p>{post.message}</p>
           <p>{post.createdAt}</p>
+          <div>
+            
+          <div>
+            {comments.filter(comment => comment.postId === post.id).map((comment) => (
+              <div key={comment.id}>
+                <p>{comment.userId} - {comment.text} </p>
+                {/* Render other comment details here */}
+              </div>
+            ))}
+          </div>
+
+          </div>
+          <MakeComment postId={post.id} />
         </div>
+        
       ))}
+      
     </div>
   );
 };
