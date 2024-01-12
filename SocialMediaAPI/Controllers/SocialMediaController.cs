@@ -42,7 +42,7 @@ public IEnumerable<PostDto> GetPosts()
     return postDto;
 }
 
-// Get posts by Id "https://localhost:7000/SocialMedia/33"
+// Get specific posts "https://localhost:7000/SocialMedia/33"
 [HttpGet("{id}")]
     /* [Authorize] */
     public ActionResult<PostDto> GetPost(int id)
@@ -68,12 +68,54 @@ public IEnumerable<PostDto> GetPosts()
 
         return postDto; // 200 OK
     }
+
+
+[HttpPost("comment")]
+public ActionResult CreateComment(CreateCommentRequest createCommentRequest)
+{
+    var user = context.Users.FirstOrDefault(u => u.Id == createCommentRequest.UserId);
+    var post = context.Posts.FirstOrDefault(u => u.Id == createCommentRequest.PostId);
+
+    if (user == null)
+    {
+        // Handle the case where the user is not found, return a suitable response
+        return NotFound("User not found");
+    }
+
+    if (post == null)
+    {
+        // Handle the case where the user is not found, return a suitable response
+        return NotFound("User not found");
+    }
+
+
+    var comment = new Comment
+    {
+        Text = createCommentRequest.Text,
+        UserId = user.Id,
+        PostId = post.Id
+    };
+
+    // Save post in database
+    context.Comments.Add(comment);
+    context.SaveChanges();
+
+
+    return Created("", comment);
+}
+
+
+
+
+
+
     
 // Create post "https://localhost:7000/SocialMedia"
 [HttpPost]
 public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
 {
     var user = context.Users.FirstOrDefault(u => u.Id == createPostRequest.UserId);
+    
 
     if (user == null)
     {
@@ -97,16 +139,16 @@ public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
 
     // Create a comment if comment text is provided
     // Return the PostDto to the caller
-    var postDto = new PostDto
+    /* var postDto = new PostDto
     {
         Id = post.Id,
         Message = post.Message,
         Liked = post.Liked,
         FirstName = user.FirstName,
         LastName = user.LastName
-    };
+    }; */
 
-    return Created("", postDto);
+    return Created("", post);
 }
 
  [HttpPost("{id}")]
@@ -177,6 +219,13 @@ public class UpdateLikedCountRequest
 {
     [Required]
     public int Liked { get; set; }
+}
+
+public class CreateCommentRequest 
+{
+    public string Text {get; set;}
+    public int UserId {get; set;}
+    public int PostId {get; set;}
 }
 
 // Skapa Post

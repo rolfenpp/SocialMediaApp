@@ -55,8 +55,8 @@ public class AuthController: ControllerBase
         UserName = createUserRequest.UserName,
         Password = createUserRequest.Password, // You should hash and salt the password for security
         FirstName = createUserRequest.FirstName,
-        LastName = createUserRequest.LastName,
-        ImageUrl = createUserRequest.ImageUrl
+        LastName = createUserRequest.LastName
+        /* ImageUrl = createUserRequest.ImageUrl */
     };
 
     context.Users.Add(user);
