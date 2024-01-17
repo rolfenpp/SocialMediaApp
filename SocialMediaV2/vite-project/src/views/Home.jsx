@@ -11,7 +11,7 @@ const Home = ({setLogin}) => {
 
   const fetchData = async () => {
     try {
-      const response = await fetch("https://localhost:7000/SocialMedia", {
+      const response = await fetch("https://localhost:7000/SocialMedia/post", {
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Set the Authorization header
         // ... any other headers
       });
@@ -55,6 +55,7 @@ const Home = ({setLogin}) => {
 
   // Update state when post is made
   const handlePostSubmit = () => {
+    fetchComments();
     fetchData(); 
   };
 
@@ -64,7 +65,7 @@ const Home = ({setLogin}) => {
       <Nav setLogin={setLogin}/>
       <MakePost onPostSubmit={handlePostSubmit}/>
       
-      <GetPost feedData={feedData} comments={comments} />
+      <GetPost feedData={feedData} comments={comments} handlePostSubmit={handlePostSubmit} />
       
     </>
   );

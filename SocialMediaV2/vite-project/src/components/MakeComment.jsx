@@ -1,7 +1,7 @@
 import { useState } from "react"
 
 
-const MakeComment = ({postId}) => {
+const MakeComment = ({postId, handlePostSubmit}) => {
     const [comment, setComment] = useState("")
 
     const handleChange = (e) => {
@@ -12,13 +12,12 @@ const MakeComment = ({postId}) => {
         console.log(postId)
         e.preventDefault();
     
-         {
+      if (comment.length >= 3) {
           const userComment = {
             Text: comment,
             UserId: localStorage.getItem("userId"),
             PostId: postId
           };
-    
           try {
             console.log(userComment);
             const response = await fetch("https://localhost:7000/socialmedia/comment", {
@@ -35,13 +34,15 @@ const MakeComment = ({postId}) => {
               /* setPosts(!posts); */
               setComment("");
               /* onPostSubmit(); */
+              handlePostSubmit();
             } else {
               console.error("Failed to create the post");
             }
           } catch (error) {
             console.error("Error during POST request:", error);
-          }
+          
         }
+      } else alert('Comment must contain atleast 3 characters.')
       };
     
     return(

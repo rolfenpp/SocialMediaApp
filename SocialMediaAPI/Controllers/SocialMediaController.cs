@@ -17,8 +17,25 @@ public class SocialMediaController : ControllerBase
         this.context = context;
     }
 
+
+[HttpGet("user/{id}")]
+public ActionResult<UserDto> GetUser(int id)
+{
+    var user = context.Users.FirstOrDefault(u => u.Id == id);
+
+    if (user == null)
+    {
+        return NotFound("User not found"); // Return 404 Not Found if the user is not found
+    }
+
+    // Create a UserDto object from the user entity
+    
+
+    return Ok(user); // Return 200 OK with the user data
+}
+
 // Get all posts "https://localhost:7000/SocialMedia"
-[HttpGet]
+[HttpGet("post")]
 /* [Authorize] */
 public IEnumerable<PostDto> GetPosts()
 {
@@ -43,7 +60,7 @@ public IEnumerable<PostDto> GetPosts()
 }
 
 // Get specific posts "https://localhost:7000/SocialMedia/33"
-[HttpGet("{id}")]
+[HttpGet("post/{id}")]
     /* [Authorize] */
     public ActionResult<PostDto> GetPost(int id)
     {
@@ -58,17 +75,54 @@ public IEnumerable<PostDto> GetPosts()
         {
             Id = post.Id,
             Message = post.Message,
-            Liked = post.Liked,
-            FirstName = post.FirstName,
-            LastName = post.LastName
-        
-        
-           /*  Beskrivning = product.Beskrivning, */
+            /* Liked = post.Liked, */
+
         };
 
         return postDto; // 200 OK
     }
 
+// Create POST "https://localhost:7000/SocialMedia/post"
+[HttpPost("post")]
+public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
+{
+    // Find user by userId
+    var user = context.Users.FirstOrDefault(u => u.Id == createPostRequest.UserId);
+    
+
+    if (user == null)
+    {
+        // Handle the case where the user is not found, return a suitable response
+        return NotFound("User not found");
+    }
+
+    var post = new Post
+    {
+        Message = createPostRequest.Message,
+        Liked = createPostRequest.Liked,
+        UserId = user.Id,
+        CreatedAt = DateTime.Now
+    };
+
+    // Save post in database
+    context.Posts.Add(post);
+    context.SaveChanges();
+
+    // Create a comment if comment text is provided
+    // Return the PostDto to the caller
+    /* var postDto = new PostDto
+    {
+        Id = post.Id,
+        Message = post.Message,
+        Liked = post.Liked,
+        FirstName = user.FirstName,
+        LastName = user.LastName
+    }; */
+
+    return Created("", post);
+}
+
+// -----------------------------
 
 [HttpPost("comment")]
 public ActionResult CreateComment(CreateCommentRequest createCommentRequest)
@@ -93,7 +147,9 @@ public ActionResult CreateComment(CreateCommentRequest createCommentRequest)
     {
         Text = createCommentRequest.Text,
         UserId = user.Id,
-        PostId = post.Id
+        PostId = post.Id,
+        FirstName = user.FirstName, // Access User property here
+        LastName = user.LastName,
     };
 
     // Save post in database
@@ -112,51 +168,25 @@ public ActionResult<IEnumerable<Comment>> GetComments()
 }
 
 
-
-
-
-
-    
-// Create post "https://localhost:7000/SocialMedia"
-[HttpPost]
-public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
+[HttpDelete("comment/{id}")]
+public IActionResult DeleteComment(int id)
 {
-    var user = context.Users.FirstOrDefault(u => u.Id == createPostRequest.UserId);
-    
+    var comment = context.Comments.Find(id);
 
-    if (user == null)
+    if (comment == null)
     {
-        // Handle the case where the user is not found, return a suitable response
-        return NotFound("User not found");
+        return NotFound("Comment not found");
     }
 
-    var post = new Post
-    {
-        Message = createPostRequest.Message,
-        Liked = createPostRequest.Liked,
-        UserId = user.Id,
-        FirstName = user.FirstName,
-        LastName = user.LastName,
-        CreatedAt = DateTime.Now
-    };
-
-    // Save post in database
-    context.Posts.Add(post);
+    context.Comments.Remove(comment);
     context.SaveChanges();
 
-    // Create a comment if comment text is provided
-    // Return the PostDto to the caller
-    /* var postDto = new PostDto
-    {
-        Id = post.Id,
-        Message = post.Message,
-        Liked = post.Liked,
-        FirstName = user.FirstName,
-        LastName = user.LastName
-    }; */
-
-    return Created("", post);
+    return NoContent(); // Returns a 204 No Content response
 }
+
+
+
+    
 
  [HttpPost("{id}")]
     /* [Authorize] */
@@ -174,8 +204,7 @@ public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
             Id = post.Id,
             Message = post.Message,
             Liked = post.Liked,
-            FirstName = post.FirstName,
-            LastName = post.LastName
+            
         
            /*  Beskrivning = product.Beskrivning, */
         };
@@ -204,14 +233,21 @@ public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
             Id = post.Id,
             Message = post.Message,
             Liked = post.Liked,
-            FirstName = post.FirstName,
-            LastName = post.LastName
+           
         };
 
         return Ok(postDto);
     }
 }  
 
+/* public class UserDto
+{
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+   
+}
+ */
 public class PostDto
 {
     public int Id {get; set;}
@@ -233,6 +269,7 @@ public class CreateCommentRequest
     public string Text {get; set;}
     public int UserId {get; set;}
     public int PostId {get; set;}
+    
 }
 
 // Skapa Post

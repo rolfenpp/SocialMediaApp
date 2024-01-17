@@ -10,6 +10,8 @@ public class Comment
     public int UserId {get; set;}
     public int PostId {get; set;}
 
+    public string FirstName {get; set;}
+    public string LastName {get; set;}
     // Add other properties like UserId, DatePosted, etc.
 
     // Foreign key to WallPost

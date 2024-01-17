@@ -20,7 +20,7 @@ const MakePost = ({ onPostSubmit }) => {
     
           try {
             console.log(userPost);
-            const response = await fetch("https://localhost:7000/SocialMedia", {
+            const response = await fetch("https://localhost:7000/SocialMedia/post", {
               method: "POST",
               headers: {
                 "Content-Type": "application/json",

@@ -1,14 +1,14 @@
 import { useState, useEffect } from "react";
 import MakeComment from "./MakeComment";
 
-const GetPost = ({ feedData, comments }) => {
+const GetPost = ({ feedData, comments, handlePostSubmit }) => {
 
 
   return (
     <div>
       {feedData.map((post) => (
-        <div key={post.id} style={{ border: "1px solid red" }}>
-          <p style={{ color: "green" }}>
+        <div key={post.id}>
+          <p>
             {post.firstName} - {post.lastName}
           </p>
           <p>{post.message}</p>
@@ -18,14 +18,16 @@ const GetPost = ({ feedData, comments }) => {
           <div>
             {comments.filter(comment => comment.postId === post.id).map((comment) => (
               <div key={comment.id}>
-                <p>{comment.userId} - {comment.text} </p>
-                {/* Render other comment details here */}
+                
+                <p>{comment.firstName} {comment.lastName}</p>
+                <p>{comment.text} </p>
+                
               </div>
             ))}
           </div>
 
           </div>
-          <MakeComment postId={post.id} />
+          <MakeComment postId={post.id} handlePostSubmit={handlePostSubmit} />
         </div>
         
       ))}
