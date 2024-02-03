@@ -20,7 +20,7 @@ const Form = styled.form`
     width: 100%;
   }
   input {
-    width: 80%;
+    width: 70%;
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
@@ -88,7 +88,7 @@ const POSTPost = ({ onPostSubmit }) => {
   };
 
   return (
-    <Form className="wallpost-form" onSubmit={handleSubmit}>
+    <Form onSubmit={handleSubmit}>
       <label htmlFor="">Tell us what you have been up to lately!</label>
       
       <div>

@@ -3,7 +3,6 @@ import styled from "styled-components"
 import { useDispatch } from 'react-redux'; // Import useDispatch
 import { login, logout } from '../../authSlice'
 import axios from "axios"; // Import Axios
-import HikeImage from "../../assets/HikeLogin.jpg"
 
 const LoginWrapper = styled.div `
     display: flex;
@@ -17,7 +16,7 @@ const LoginWrapper = styled.div `
 const LoginImage = styled.div `
   width: 400px;
   height: 75vh;
-  background-image: url(${HikeImage});
+  background-image: url("https://socialmediaproject01.blob.core.windows.net/socialmediaimgs/HikeLogin.jpg");
   background-size: cover;
   z-index: 999;
 
