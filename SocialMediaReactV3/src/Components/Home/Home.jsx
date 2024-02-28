@@ -13,7 +13,7 @@ const PageWrapper = styled.div `
 
 `
 const ContentWrapper = styled.div `
-    width: 80%;
+    width: 100%;
     display: flex;
     align-items: center;
     flex-direction: column;

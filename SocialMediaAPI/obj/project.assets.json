@@ -3340,19 +3340,19 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\isakb\\.nuget\\packages\\": {}
+    "C:\\Users\\Admin\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\isakb\\Workspace\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
+      "projectUniqueName": "C:\\Workspace - Allgon\\Privat Projekt\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
       "projectName": "SocialMedia",
-      "projectPath": "C:\\Users\\isakb\\Workspace\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
-      "packagesPath": "C:\\Users\\isakb\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\isakb\\Workspace\\SocialMediaApp\\SocialMediaAPI\\obj\\",
+      "projectPath": "C:\\Workspace - Allgon\\Privat Projekt\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
+      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
+      "outputPath": "C:\\Workspace - Allgon\\Privat Projekt\\SocialMediaApp\\SocialMediaAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\isakb\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
@@ -3410,6 +3410,24 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
+        "downloadDependencies": [
+          {
+            "name": "Microsoft.AspNetCore.App.Ref",
+            "version": "[7.0.15, 7.0.15]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Host.win-x64",
+            "version": "[7.0.15, 7.0.15]"
+          },
+          {
+            "name": "Microsoft.NETCore.App.Ref",
+            "version": "[7.0.15, 7.0.15]"
+          },
+          {
+            "name": "Microsoft.WindowsDesktop.App.Ref",
+            "version": "[7.0.15, 7.0.15]"
+          }
+        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"

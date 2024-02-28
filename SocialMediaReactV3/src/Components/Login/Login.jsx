@@ -2,8 +2,12 @@ import React, { useState } from "react";
 import styled from "styled-components"
 import { useDispatch } from 'react-redux'; 
 import { login, logout } from '../../authSlice'
+<<<<<<< HEAD
 import axios from "axios"; 
 import HikeImage from "../../assets/HikeLogin.jpg"
+=======
+import axios from "axios"; // Import Axios
+>>>>>>> cc42625fa75644a65e711c7ba849fcc562d5f988
 
 const LoginWrapper = styled.div `
     display: flex;
@@ -17,7 +21,7 @@ const LoginWrapper = styled.div `
 const LoginImage = styled.div `
   width: 400px;
   height: 75vh;
-  background-image: url(${HikeImage});
+  background-image: url("https://socialmediaproject01.blob.core.windows.net/socialmediaimgs/HikeLogin.jpg");
   background-size: cover;
   z-index: 999;
 

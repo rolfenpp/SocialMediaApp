@@ -4,6 +4,12 @@ import axios from "axios";
 import POSTComment from "./POSTComment";
 
 const PostWrapper = styled.div `
+<<<<<<< HEAD
+=======
+    display: flex;
+    flex-direction: column;
+
+>>>>>>> cc42625fa75644a65e711c7ba849fcc562d5f988
     margin-bottom: 30px;
     width: 100%;
     padding: 10px;
@@ -73,6 +79,7 @@ const GETPosts = () => {
         GetWallComments();
       }
 
+<<<<<<< HEAD
     return <div>
       {wallPosts.map((post) => (
         <PostWrapper key={post.id}>
@@ -86,6 +93,20 @@ const GETPosts = () => {
             {post.message}
           </PostText>
           <p></p>
+=======
+    return <>
+        {wallPosts.map((post) => (
+          <PostWrapper key={post.id}>
+            <NameWrapper>
+              {post.firstName} {post.lastName} 
+            </NameWrapper>
+            <PostTime>
+              {post.createdAt}
+            </PostTime>
+            <PostText>
+              {post.message}
+            </PostText>
+>>>>>>> cc42625fa75644a65e711c7ba849fcc562d5f988
           <div>
             <CommentsWrapper>
               {wallComments
@@ -100,7 +121,7 @@ const GETPosts = () => {
           <POSTComment  postId={post.id} handlePostSubmit={handlePostSubmit} />
         </PostWrapper>
       ))}
-    </div>
+    </>
 }
 
 export default GETPosts
