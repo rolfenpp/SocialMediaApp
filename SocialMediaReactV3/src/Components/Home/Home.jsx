@@ -20,8 +20,7 @@ const ContentWrapper = styled.div `
 
     @media (min-width: 600px) {
     width: 550px;
-  }
-
+  };
 `
 const NavWrapper = styled.div `
     width: 100%;
@@ -32,17 +31,14 @@ const NavWrapper = styled.div `
 
 const Home = () => {
     return (
-    
 <PageWrapper>
     <ContentWrapper>
         <POSTPost />
         <GETPosts />
     </ContentWrapper>
-
     <NavWrapper>
        <Nav /> 
     </NavWrapper>
-    
 </PageWrapper>  
      
     )

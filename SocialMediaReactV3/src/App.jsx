@@ -16,26 +16,21 @@ const MainWrapper = styled.div `
   height: 100vh;
   width: 100%;
   background-color: #2A2A2A;
-  
-`
-
+`;
 function App() {
   /* const [isLoggedIn, setIsLoggedIn] = useState(true); */
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
  
   return (
-     
       <BrowserRouter>
         <MainWrapper>
           <Routes>
-            {/* Use a ternary operator to conditionally render Login or Home */}
             {isLoggedIn ? 
               (<Route path="/" element={<Home  />} />) 
             : (<Route path="/" element={<Login />} />)}
           </Routes>
         </MainWrapper>
       </BrowserRouter>
-
   )
 }
 

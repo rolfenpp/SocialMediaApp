@@ -12,7 +12,7 @@ public class Comment
 
     public string FirstName {get; set;}
     public string LastName {get; set;}
-    // Add other properties like UserId, DatePosted, etc.
+    
 
     // Foreign key to WallPost
     /* public int WallPostId { get; set; } */

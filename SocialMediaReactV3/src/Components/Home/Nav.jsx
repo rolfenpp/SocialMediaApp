@@ -23,7 +23,7 @@ const MenuBtn = styled.button `
     cursor: pointer;
 
     &:hover {
-      opacity: 0.8; /* Change opacity on hover */
+      opacity: 0.8;
     }
 `
 
@@ -34,7 +34,6 @@ const Nav = () => {
     localStorage.removeItem("userId");
     dispatch(logout())
   };
-
 
     return (
     <NavBar>

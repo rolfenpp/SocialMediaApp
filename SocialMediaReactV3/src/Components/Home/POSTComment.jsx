@@ -33,8 +33,6 @@ const POSTComment = ({ postId, handlePostSubmit }) => {
           console.log(userComment);
           console.log("Comment created successfully");
           handlePostSubmit();
-          /* setComment(""); */
-          
         } else {
           console.error("Failed to create the comment");
         }

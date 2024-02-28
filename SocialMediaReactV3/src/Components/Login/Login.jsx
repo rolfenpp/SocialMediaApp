@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import styled from "styled-components"
-import { useDispatch } from 'react-redux'; // Import useDispatch
+import { useDispatch } from 'react-redux'; 
 import { login, logout } from '../../authSlice'
-import axios from "axios"; // Import Axios
+import axios from "axios"; 
 import HikeImage from "../../assets/HikeLogin.jpg"
 
 const LoginWrapper = styled.div `
@@ -32,8 +32,6 @@ const LoginFormContainer = styled.form`
   right: 20%;
   display: flex;
   flex-direction: column; 
-  
-  
   padding: 20px;
   height: 55vh;
   width: 300px;
@@ -74,10 +72,8 @@ const LoginFormContainer = styled.form`
     height: 35px;
   }
 
-
   }
   
-
   @media (max-width: 600px) {
     right: 0;
     width: 80%;
@@ -108,16 +104,13 @@ const Login = () => {
           });
     
           if (response.status === 200) {
-            // Assuming a successful login returns a status code 200
             const data = response.data;
             console.log(data);
             localStorage.setItem("token", data.token);
             localStorage.setItem("userId", data.userId);
             console.log("Authentication Successful");
             dispatch(login());
-    
           } else {
-            
             console.error("Authentication failed.");
           }
         } catch (error) {
@@ -125,8 +118,6 @@ const Login = () => {
             console.error("Error during authentication:", error);
         }
       };
-
-
 
     return (
     <LoginWrapper>

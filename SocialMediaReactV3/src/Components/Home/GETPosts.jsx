@@ -4,7 +4,6 @@ import axios from "axios";
 import POSTComment from "./POSTComment";
 
 const PostWrapper = styled.div `
-
     margin-bottom: 30px;
     width: 100%;
     padding: 10px;
@@ -35,7 +34,6 @@ const GETPosts = () => {
         try {
           const response = await axios.get("https://localhost:7000/SocialMedia/post", {
             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Set the Authorization header
-            // ... any other headers
           });
           if (response.status === 200) {
             const jsonData = response.data;
@@ -52,7 +50,6 @@ const GETPosts = () => {
         try {
           const response = await axios.get("https://localhost:7000/SocialMedia/comment", {
             /* headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },  */// Set the Authorization header
-            // ... any other headers
           });
           if (response.status === 200) {
             const jsonData = response.data;
@@ -88,8 +85,6 @@ const GETPosts = () => {
           <PostText>
             {post.message}
           </PostText>
-          
-          
           <p></p>
           <div>
             <CommentsWrapper>
@@ -100,11 +95,8 @@ const GETPosts = () => {
                     <p>{comment.firstName} {comment.lastName} - {comment.text}</p>
                   </div>
                 ))}
-
-                
             </CommentsWrapper>
           </div>
-          
           <POSTComment  postId={post.id} handlePostSubmit={handlePostSubmit} />
         </PostWrapper>
       ))}

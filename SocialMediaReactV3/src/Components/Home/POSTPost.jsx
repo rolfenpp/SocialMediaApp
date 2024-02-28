@@ -12,7 +12,6 @@ const Form = styled.form`
   justify-content: center;
   background-color: #427c4e;
   padding: 20px;
-  
 
   div {
     display: flex;
@@ -57,7 +56,7 @@ const POSTPost = ({ onPostSubmit }) => {
     if (message.length >= 5) {
       const userPost = {
         message: message,
-        userId: localStorage.getItem("userId"), // Who made the post
+        userId: localStorage.getItem("userId"),
       };
 
       try {
@@ -90,7 +89,6 @@ const POSTPost = ({ onPostSubmit }) => {
   return (
     <Form className="wallpost-form" onSubmit={handleSubmit}>
       <label htmlFor="">Tell us what you have been up to lately!</label>
-      
       <div>
         <input
           type="text"
