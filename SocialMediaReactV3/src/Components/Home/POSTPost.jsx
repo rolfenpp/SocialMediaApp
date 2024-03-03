@@ -43,7 +43,7 @@ const Form = styled.form`
 `;
 
 
-const POSTPost = ({ onPostSubmit }) => {
+const POSTPost = ({ updateWall }) => {
   const [message, setMessage] = useState("");
 
   const handleMessage = (e) => {
@@ -52,7 +52,6 @@ const POSTPost = ({ onPostSubmit }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (message.length >= 5) {
       const userPost = {
         message: message,
@@ -61,20 +60,12 @@ const POSTPost = ({ onPostSubmit }) => {
 
       try {
         console.log(userPost);
-        const response = await axios.post(
-          "https://localhost:7000/SocialMedia/post",
-          userPost,
-          {
-            headers: {
-              "Content-Type": "application/json",
-            },
-          }
-        );
-
-        if (response.status === 200) {
+        const response = await axios.post("https://localhost:7000/SocialMedia/post", userPost,
+          {headers: {"Content-Type": "application/json",},});
+        if (response.status === 201) {
           console.log("Post created successfully");
           setMessage("");
-          onPostSubmit();
+          updateWall();
         } else {
           console.error("Failed to create the post");
         }

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-const POSTComment = ({ postId, handlePostSubmit }) => {
+const POSTComment = ({ postId, updateWall }) => {
   const [comment, setComment] = useState("");
 
   const handleChange = (e) => {
@@ -32,7 +32,7 @@ const POSTComment = ({ postId, handlePostSubmit }) => {
         if (response.status === 201) {
           console.log(userComment);
           console.log("Comment created successfully");
-          handlePostSubmit();
+          updateWall();
         } else {
           console.error("Failed to create the comment");
         }

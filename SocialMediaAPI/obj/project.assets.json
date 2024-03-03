@@ -3340,24 +3340,26 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Admin\\.nuget\\packages\\": {}
+    "C:\\Users\\Matrix\\.nuget\\packages\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Workspace - Allgon\\Privat Projekt\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
+      "projectUniqueName": "C:\\Users\\Matrix\\Documents\\GitHub\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
       "projectName": "SocialMedia",
-      "projectPath": "C:\\Workspace - Allgon\\Privat Projekt\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
-      "packagesPath": "C:\\Users\\Admin\\.nuget\\packages\\",
-      "outputPath": "C:\\Workspace - Allgon\\Privat Projekt\\SocialMediaApp\\SocialMediaAPI\\obj\\",
+      "projectPath": "C:\\Users\\Matrix\\Documents\\GitHub\\SocialMediaApp\\SocialMediaAPI\\SocialMedia.csproj",
+      "packagesPath": "C:\\Users\\Matrix\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\Matrix\\Documents\\GitHub\\SocialMediaApp\\SocialMediaAPI\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\Admin\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "C:\\Users\\Matrix\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
       "originalTargetFrameworks": [
         "net7.0"
       ],
       "sources": {
+        "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -3410,24 +3412,6 @@
         ],
         "assetTargetFallback": true,
         "warn": true,
-        "downloadDependencies": [
-          {
-            "name": "Microsoft.AspNetCore.App.Ref",
-            "version": "[7.0.15, 7.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Host.win-x64",
-            "version": "[7.0.15, 7.0.15]"
-          },
-          {
-            "name": "Microsoft.NETCore.App.Ref",
-            "version": "[7.0.15, 7.0.15]"
-          },
-          {
-            "name": "Microsoft.WindowsDesktop.App.Ref",
-            "version": "[7.0.15, 7.0.15]"
-          }
-        ],
         "frameworkReferences": {
           "Microsoft.AspNetCore.App": {
             "privateAssets": "none"
@@ -3436,7 +3420,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.400\\RuntimeIdentifierGraph.json"
       }
     }
   }

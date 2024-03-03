@@ -4,8 +4,10 @@ import { login, logout } from '../../authSlice'
 
 import { FiHome } from "react-icons/fi";
 import { FiBell } from "react-icons/fi";
+import { FiUser } from "react-icons/fi";
 import { IoSettingsOutline } from "react-icons/io5";
 import { RiLogoutBoxLine } from "react-icons/ri";
+import { Link } from "react-router-dom";
 
 const NavBar = styled.div`
     background-color: #424242;
@@ -40,7 +42,8 @@ const Nav = () => {
         <MenuBtn onClick={handleLogout}><RiLogoutBoxLine size={30}/></MenuBtn>
         <MenuBtn><IoSettingsOutline size={32}/></MenuBtn>
         <MenuBtn><FiBell size={30}/></MenuBtn>
-        <MenuBtn><FiHome size={30}/></MenuBtn>
+        <Link to="/profile"><MenuBtn><FiUser size={35}/></MenuBtn></Link>
+        <Link to="/"><MenuBtn><FiHome size={30}/></MenuBtn></Link>
     </NavBar>)
 }
 

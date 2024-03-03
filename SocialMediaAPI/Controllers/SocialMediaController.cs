@@ -25,16 +25,18 @@ public ActionResult<UserDto> GetUser(int id)
 
     if (user == null)
     {
-        return NotFound("User not found"); 
+        return NotFound("User not found"); // Return 404 Not Found if the user is not found
     }
+
+    // Create a UserDto object from the user entity
     
 
-    return Ok(user);
+    return Ok(user); // Return 200 OK with the user data
 }
 
 // Get all posts "https://localhost:7000/SocialMedia"
 [HttpGet("post")]
-/* [Authorize] */
+[Authorize]
 public IEnumerable<PostDto> GetPosts()
 {
     var localPosts = context.Posts
@@ -48,9 +50,9 @@ public IEnumerable<PostDto> GetPosts()
         Id = x.Id,
         Message = x.Message,
         Liked = x.Liked,
-        FirstName = x.User.FirstName,
+        FirstName = x.User.FirstName, 
         LastName = x.User.LastName,
-        CreatedAt = x.CreatedAt
+        CreatedAt = x.CreatedAt       
         
     });
 
@@ -66,12 +68,15 @@ public IEnumerable<PostDto> GetPosts()
         /* var user = context.Users.FirstOrDefault(x => x.Id == id); */
     
         if (post is null)
+        /* if (user is null) */
             return NotFound(); // 404 Not Found
 
         var postDto = new PostDto 
         {
             Id = post.Id,
             Message = post.Message,
+            /* Liked = post.Liked, */
+
         };
 
         return postDto; // 200 OK
@@ -87,6 +92,7 @@ public ActionResult<PostDto> CreatePost(CreatePostRequest createPostRequest)
 
     if (user == null)
     {
+        // Handle the case where the user is not found, return a suitable response
         return NotFound("User not found");
     }
 
@@ -126,20 +132,23 @@ public ActionResult CreateComment(CreateCommentRequest createCommentRequest)
 
     if (user == null)
     {
+        // Handle the case where the user is not found, return a suitable response
         return NotFound("User not found");
     }
 
     if (post == null)
     {
+        // Handle the case where the user is not found, return a suitable response
         return NotFound("User not found");
     }
+
 
     var comment = new Comment
     {
         Text = createCommentRequest.Text,
         UserId = user.Id,
         PostId = post.Id,
-        FirstName = user.FirstName,
+        FirstName = user.FirstName, // Access User property here
         LastName = user.LastName,
     };
 
@@ -147,11 +156,13 @@ public ActionResult CreateComment(CreateCommentRequest createCommentRequest)
     context.Comments.Add(comment);
     context.SaveChanges();
 
+
     return Created("", comment);
 }
 [HttpGet("comment")]
 public ActionResult<IEnumerable<Comment>> GetComments()
 {
+    
     var comments = context.Comments.ToList();
     return Ok(comments);
 }
@@ -173,6 +184,10 @@ public IActionResult DeleteComment(int id)
     return NoContent(); // Returns a 204 No Content response
 }
 
+
+
+    
+
  [HttpPost("{id}")]
     /* [Authorize] */
     public ActionResult<PostDto> LikeCommentPost(int id)
@@ -181,6 +196,7 @@ public IActionResult DeleteComment(int id)
         /* var user = context.Users.FirstOrDefault(x => x.Id == id); */
 
         if (post is null)
+        /* if (user is null) */
             return NotFound(); // 404 Not Found
 
         var postDto = new PostDto
@@ -188,6 +204,9 @@ public IActionResult DeleteComment(int id)
             Id = post.Id,
             Message = post.Message,
             Liked = post.Liked,
+            
+        
+           /*  Beskrivning = product.Beskrivning, */
         };
 
         return postDto; // 200 OK
@@ -202,7 +221,11 @@ public IActionResult DeleteComment(int id)
         {
             return NotFound("Post not found");
         }
+
+        // Update the liked count with the value from the request
         post.Liked = updateRequest.Liked;
+
+        // Save changes to the database
         context.SaveChanges();
 
         var postDto = new PostDto 
@@ -217,6 +240,14 @@ public IActionResult DeleteComment(int id)
     }
 }  
 
+/* public class UserDto
+{
+    public int Id { get; set; }
+    public string FirstName { get; set; }
+    public string LastName { get; set; }
+   
+}
+ */
 public class PostDto
 {
     public int Id {get; set;}
@@ -252,4 +283,29 @@ public class CreatePostRequest
     public int UserId { get; set; }
 
     public DateTime CreatedAt { get; set; }
+    /* public string CommentText { get; set; } */
 }
+
+/* public class CreateCommentRequest
+{
+    [Required]
+    public string Message {get; set;}
+    [Required]
+    public int Liked {get; set;}
+    [Required]
+    public int UserId { get; set; }
+    public int PostId { get; set; }
+    public string CommentText { get; set; }
+} */
+/* public class CommentDto
+{
+    public int Id { get; set; }
+    public string Text { get; set; }
+    public int UserId { get; set; }
+
+    // Add other properties as needed
+
+    // You might want to include the post information in the DTO
+    public int PostId { get; set; }
+}
+ */

@@ -1,7 +1,10 @@
-import styled from "styled-components"
-import Nav from "./Nav"
-import GETPosts from "./GetPosts"
-import POSTPost from "./POSTPost"
+import styled from "styled-components";
+import Nav from "./Nav";
+import GETPosts from "./WallPosts";
+import POSTPost from "./POSTPost";
+import { Routes, Route } from 'react-router-dom'; // Import Routes instead of BrowserRouter
+import Profile from "./Profile";
+import WallPage from "./WallPage";
 
 const PageWrapper = styled.div `
     display: flex;
@@ -22,26 +25,18 @@ const ContentWrapper = styled.div `
     width: 550px;
   };
 `
-const NavWrapper = styled.div `
-    width: 100%;
-    bottom: 0;
-    position: fixed;
-    z-index: 999;
-`
 
 const Home = () => {
     return (
-<PageWrapper>
-    <ContentWrapper>
-        <POSTPost />
-        <GETPosts />
-    </ContentWrapper>
-    <NavWrapper>
-       <Nav /> 
-    </NavWrapper>
-</PageWrapper>  
-     
-    )
+      <PageWrapper>
+        <ContentWrapper>
+          <Routes>
+            <Route path="*" element={<WallPage />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+        </ContentWrapper>
+      </PageWrapper>  
+    );
 }
 
-export default Home
+export default Home;
