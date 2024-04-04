@@ -8,6 +8,7 @@ import Login from './Components/Login/Login';
 import Home from './Components/Home/Home';
 import Profile from './Components/Home/Profile';
 import Nav from './Components/Home/Nav';
+import { QueryClient, QueryClientProvider, useQueryClient } from 'react-query';
 
 /* import { useDispatch } from 'react-redux';
 import { login, logout } from './authSlice';
@@ -29,21 +30,24 @@ const NavWrapper = styled.div `
 function App() {
   /* const [isLoggedIn, setIsLoggedIn] = useState(true); */
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
- 
+  const queryClient = new QueryClient();
+
   return (
-    <BrowserRouter>
-      <MainWrapper>
-        <Routes>
-          <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
-          <Route path="/profile" element={<Profile />} />
-        </Routes>
-        {isLoggedIn && (
-          <NavWrapper>
-            <Nav />
-          </NavWrapper>
-        )}
-      </MainWrapper>
-  </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <MainWrapper>
+          <Routes>
+            <Route path="/" element={isLoggedIn ? <Home /> : <Login />} />
+            <Route path="/profile" element={<Profile />} />
+          </Routes>
+          {isLoggedIn && (
+            <NavWrapper>
+              <Nav />
+            </NavWrapper>
+          )}
+        </MainWrapper>
+    </BrowserRouter>
+  </QueryClientProvider>
   )
 }
 

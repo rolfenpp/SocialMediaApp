@@ -6,6 +6,7 @@ import App from './App';
 import './index.css';
 
 import { createRoot } from 'react-dom';
+import { QueryClient, QueryClientProvider } from 'react-query';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>

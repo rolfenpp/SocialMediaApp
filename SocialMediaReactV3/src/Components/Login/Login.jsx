@@ -2,12 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components"
 import { useDispatch } from 'react-redux'; 
 import { login, logout } from '../../authSlice'
-<<<<<<< HEAD
 import axios from "axios"; 
-import HikeImage from "../../assets/HikeLogin.jpg"
-=======
-import axios from "axios"; // Import Axios
->>>>>>> cc42625fa75644a65e711c7ba849fcc562d5f988
 
 const LoginWrapper = styled.div `
     display: flex;

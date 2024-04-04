@@ -4,12 +4,9 @@ import axios from "axios";
 import POSTComment from "./POSTComment";
 
 const PostWrapper = styled.div `
-<<<<<<< HEAD
-=======
     display: flex;
     flex-direction: column;
 
->>>>>>> cc42625fa75644a65e711c7ba849fcc562d5f988
     margin-bottom: 30px;
     width: 100%;
     padding: 10px;
@@ -39,7 +36,7 @@ const GETPosts = () => {
     const GetWallPosts = async () => {
         try {
           const response = await axios.get("https://localhost:7000/SocialMedia/post", {
-            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, // Set the Authorization header
+            headers: { Authorization: `Bearer ${localStorage.getItem("token")}` }, 
           });
           if (response.status === 200) {
             const jsonData = response.data;
@@ -55,7 +52,7 @@ const GETPosts = () => {
       const GetWallComments = async () => {
         try {
           const response = await axios.get("https://localhost:7000/SocialMedia/comment", {
-            /* headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },  */// Set the Authorization header
+             headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },  
           });
           if (response.status === 200) {
             const jsonData = response.data;
@@ -79,21 +76,6 @@ const GETPosts = () => {
         GetWallComments();
       }
 
-<<<<<<< HEAD
-    return <div>
-      {wallPosts.map((post) => (
-        <PostWrapper key={post.id}>
-          <NameWrapper>
-            {post.firstName} {post.lastName} 
-          </NameWrapper>
-          <PostTime>
-            {post.createdAt}
-          </PostTime>
-          <PostText>
-            {post.message}
-          </PostText>
-          <p></p>
-=======
     return <>
         {wallPosts.map((post) => (
           <PostWrapper key={post.id}>
@@ -106,7 +88,6 @@ const GETPosts = () => {
             <PostText>
               {post.message}
             </PostText>
->>>>>>> cc42625fa75644a65e711c7ba849fcc562d5f988
           <div>
             <CommentsWrapper>
               {wallComments
